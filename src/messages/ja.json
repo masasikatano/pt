@@ -1,0 +1,32 @@
+{
+  "site": {
+    "name": "ProductTrapper",
+    "description": "Product Hunt の featured プロダクトを 2026 年以降から日次収集し、一覧・ランキング・トピック別に俯瞰できるサイト。"
+  },
+  "nav": {
+    "home": "ホーム"
+  },
+  "view": {
+    "list": "一覧",
+    "ranking": "ランキング"
+  },
+  "topic": {
+    "all": "すべて"
+  },
+  "post": {
+    "votes": "投票",
+    "comments": "コメント",
+    "featuredAt": "ローンチ日",
+    "makers": "メーカー",
+    "website": "サイト",
+    "productHunt": "Product Hunt",
+    "noThumbnail": "画像なし"
+  },
+  "footer": {
+    "dataFrom": "Data from",
+    "lastUpdated": "最終更新"
+  },
+  "empty": {
+    "noPosts": "該当するプロダクトが見つかりませんでした。"
+  }
+}

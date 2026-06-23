@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE_NAME } from '@/lib/constants';
+import { t } from '@/lib/i18n';
+import { loadTopics, loadMeta } from '@/lib/posts';
+import { isViewMode } from '@/lib/posts';
+import PostBrowser from '@/components/react/PostBrowser';
+
+export const prerender = true;
+
+const topics = loadTopics();
+const meta = loadMeta();
+
+const viewParam = Astro.url.searchParams.get('view');
+const topicParam = Astro.url.searchParams.get('topic');
+
+const initialView = isViewMode(viewParam) ? viewParam : 'list';
+const initialTopic = topicParam && topics.some((t) => t.slug === topicParam) ? topicParam : null;
+
+const pageUrl = '/';
+const canonical = topicParam || viewParam ? `${pageUrl}?${Astro.url.searchParams.toString()}` : pageUrl;
+---
+
+<BaseLayout
+  title={SITE_NAME}
+  description={t('site.description')}
+  canonical={canonical}
+>
+  <main>
+    <header class="page-header">
+      <h1>{SITE_NAME}</h1>
+      <p class="page-description">{t('site.description')}</p>
+      <p class="page-meta">
+        {meta.totalCount > 0 && (
+          <span>{meta.totalCount} products since 2026</span>
+        )}
+      </p>
+    </header>
+    <PostBrowser
+      initialView={initialView}
+      initialTopic={initialTopic}
+      client:load
+    />
+  </main>
+</BaseLayout>

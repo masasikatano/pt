@@ -24,9 +24,9 @@ Product Hunt に登録された featured プロダクト（Post）を、2026 年
 - 日次バッチ更新により、レート制限内で安定的にデータを蓄積
 - mtg プロジェクトと同じ Astro + Cloudflare Workers 構成で、低コスト運用
 
-**本番 URL**: `https://product.trapper.workers.dev`  
+**本番 URL**: `https://pt.p12r.workers.dev`  
 **Worker 名**: `producttrapper`（`wrangler.toml`）  
-**リポジトリ**: `/home/masasikatano/project/producttrapper`
+**リポジトリ**: `/home/masasikatano/project/pt`
 
 ---
 
@@ -69,13 +69,13 @@ Product Hunt に登録された featured プロダクト（Post）を、2026 年
 |------|------|--------|
 | ランキング構成は？ | **2026 年以降の全期間ランキング 1 本** | 月別、年別、期間切替 UI |
 | トピック UI は？ | **タブ**（mtg の年代タブと同様） | ドロップダウン、サイドバー、チップ |
-| プロジェクト配置は？ | **`/home/masasikatano/project/producttrapper`**（新規） | 現在のワークスペース、ph フォルダ |
+| プロジェクト配置は？ | **`/home/masasikatano/project/pt`**（新規） | 現在のワークスペース、ph フォルダ |
 
 ### Round 6: デプロイ・一覧のデフォルト
 
 | 質問 | 採択 | 不採用 |
 |------|------|--------|
-| 本番 URL は？ | **`https://product.trapper.workers.dev`** | ph.syowa.workers.dev |
+| 本番 URL は？ | **`https://pt.p12r.workers.dev`** | ph.syowa.workers.dev |
 | デフォルト並び順は？ | **投票数降順** | ローンチ日順、コメント数順、登録日順 |
 | 付帯ページは？ | **不要** | about / privacy / contact |
 

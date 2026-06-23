@@ -1,0 +1,25 @@
+---
+import { t } from '@/lib/i18n';
+import { loadMeta } from '@/lib/posts';
+
+const meta = loadMeta();
+const fetchedAt = meta.fetchedAt ? new Date(meta.fetchedAt).toLocaleDateString('ja-JP') : '';
+---
+
+<footer class="site-footer">
+  <p class="attribution">
+    {t('footer.dataFrom')}
+    <a
+      href="https://www.producthunt.com"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Product Hunt
+    </a>
+  </p>
+  {fetchedAt && (
+    <p class="last-updated">
+      {t('footer.lastUpdated')}: {fetchedAt}
+    </p>
+  )}
+</footer>
