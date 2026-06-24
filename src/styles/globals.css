@@ -135,20 +135,9 @@ main {
 /* ===== Topic Tabs ===== */
 .topic-tabs {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 0.5rem;
   padding-bottom: 0.25rem;
-  scrollbar-width: thin;
-}
-
-.topic-tabs::-webkit-scrollbar {
-  height: 6px;
-}
-
-.topic-tabs::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: 3px;
 }
 
 .topic-tab {
