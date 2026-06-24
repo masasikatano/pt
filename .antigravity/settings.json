@@ -1,0 +1,16 @@
+{
+  "project": {
+    "name": "ProductTrapper",
+    "description": "Product Hunt featured products tracker (Astro 6 + Cloudflare Workers)",
+    "language": "ja",
+    "stack": ["Astro", "React", "TypeScript", "Cloudflare Workers", "Node.js"]
+  },
+  "instructions": {
+    "beforeBuild": "Run `npm run lint` and `npm run build` to verify changes. Use `SKIP_PREBUILD=true` to skip API fetching when a cached posts.json exists.",
+    "beforeDeploy": "Run `npm run build` then `npm run deploy`. Ensure CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID, and PH_DEVELOPER_TOKEN are configured.",
+    "dataFetch": "Use `node scripts/fetch-posts.js --incremental` for daily updates; full fetch uses `node scripts/fetch-posts.js`.",
+    "specSource": "Always consult spec.md as the single source of truth before adding features."
+  },
+  "ignoreFiles": [".antigravityignore", ".gitignore"],
+  "skillsDir": ".claude/skills"
+}

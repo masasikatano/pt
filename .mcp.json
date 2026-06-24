@@ -1,0 +1,19 @@
+{
+  "name": "ProductTrapper",
+  "description": "Product Hunt featured product tracker built with Astro 6, React Islands, and Cloudflare Workers",
+  "version": "0.1.0",
+  "entrypoints": {
+    "dev": "npm run dev",
+    "build": "npm run build",
+    "deploy": "npm run deploy",
+    "fetch": "node scripts/fetch-posts.js",
+    "fetch-incremental": "node scripts/fetch-posts.js --incremental"
+  },
+  "context": {
+    "spec": "spec.md",
+    "architecture": "architecture.md",
+    "readme": "README.md",
+    "cloudflare": "README_CLOUDFLARE.md"
+  },
+  "instructions": "Refer to spec.md for the single source of truth. Developer token (PH_DEVELOPER_TOKEN) is only used during prebuild; never expose it to the client or Worker runtime. Generated posts.json lives in src/generated/posts.json and is copied to public/posts.json for the client."
+}
