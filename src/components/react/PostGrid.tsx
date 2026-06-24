@@ -58,12 +58,6 @@ export default function PostGrid({ posts }: PostGridProps) {
                 ))}
               </ul>
             )}
-            {post.makers.length > 0 && (
-              <p className="post-makers">
-                {t('post.makers')}:{' '}
-                {post.makers.map((maker) => maker.name).join(', ')}
-              </p>
-            )}
             <div className="post-links">
               <a
                 href={post.website}
