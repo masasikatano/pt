@@ -89,6 +89,23 @@ function normalizeMaker(maker) {
   };
 }
 
+function normalizeThumbnailUrl(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (/\.gif$/i.test(u.pathname)) {
+      // `auto=format` can negotiate animated WebP/AVIF and override `fm=jpg`,
+      // so remove it for GIFs to ensure a still JPEG frame is served.
+      u.searchParams.delete('auto');
+      u.searchParams.set('fm', 'jpg');
+      return u.toString();
+    }
+    return url;
+  } catch {
+    return url;
+  }
+}
+
 function normalizePost(node) {
   const topics = (node.topics?.edges ?? [])
     .map(normalizeTopic)
@@ -108,7 +125,7 @@ function normalizePost(node) {
     createdAt: node.createdAt,
     website: node.website,
     url: node.url,
-    thumbnailUrl: node.thumbnail?.url ?? null,
+    thumbnailUrl: normalizeThumbnailUrl(node.thumbnail?.url ?? null),
     topics,
     makers,
   };
