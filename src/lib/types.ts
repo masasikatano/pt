@@ -8,6 +8,12 @@ export interface TopicSummary extends Topic {
   postCount: number;
 }
 
+export interface TopicGroup {
+  slug: string;
+  name: string;
+  postCount: number;
+}
+
 export interface Maker {
   id: string;
   name: string;
@@ -38,7 +44,8 @@ export interface PostsData {
     totalCount: number;
     source: string;
   };
-  topics: TopicSummary[];
+  groups: TopicGroup[];
+  topicToGroup: Record<string, string>;
   posts: PostRecord[];
 }
 

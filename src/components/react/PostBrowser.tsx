@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import type { PostRecord, TopicSummary, ViewMode } from '@/lib/types';
+import type { PostRecord, TopicGroup, ViewMode } from '@/lib/types';
 import { fetchPostsData } from '@/lib/data-client';
+import { filterPostsByGroup } from '@/lib/posts';
 import ViewToggle from './ViewToggle';
 import TopicTabs from './TopicTabs';
 import PostGrid from './PostGrid';
@@ -10,10 +11,10 @@ import RankingList from './RankingList';
 
 interface PostBrowserProps {
   initialView: ViewMode;
-  initialTopic: string | null;
+  initialGroup: string | null;
 }
 
-function updateQueryString(view: ViewMode, topic: string | null) {
+function updateQueryString(view: ViewMode, group: string | null) {
   if (typeof window === 'undefined') return;
   const params = new URLSearchParams(window.location.search);
   if (view === 'list') {
@@ -21,21 +22,24 @@ function updateQueryString(view: ViewMode, topic: string | null) {
   } else {
     params.set('view', view);
   }
-  if (topic) {
-    params.set('topic', topic);
+  if (group) {
+    params.set('group', group);
   } else {
-    params.delete('topic');
+    params.delete('group');
   }
+  // Remove legacy topic param once the user interacts with the new filter.
+  params.delete('topic');
   const query = params.toString();
   const url = query ? `?${query}` : window.location.pathname;
   window.history.replaceState({}, '', url);
 }
 
-export default function PostBrowser({ initialView, initialTopic }: PostBrowserProps) {
+export default function PostBrowser({ initialView, initialGroup }: PostBrowserProps) {
   const [view, setView] = useState<ViewMode>(initialView);
-  const [topic, setTopic] = useState<string | null>(initialTopic);
+  const [group, setGroup] = useState<string | null>(initialGroup);
   const [posts, setPosts] = useState<PostRecord[]>([]);
-  const [topics, setTopics] = useState<TopicSummary[]>([]);
+  const [groups, setGroups] = useState<TopicGroup[]>([]);
+  const [topicToGroup, setTopicToGroup] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +49,8 @@ export default function PostBrowser({ initialView, initialTopic }: PostBrowserPr
       .then((data) => {
         if (cancelled) return;
         setPosts(data.posts);
-        setTopics(data.topics);
+        setGroups(data.groups);
+        setTopicToGroup(data.topicToGroup);
         setLoading(false);
       })
       .catch((err) => {
@@ -59,17 +64,14 @@ export default function PostBrowser({ initialView, initialTopic }: PostBrowserPr
   }, []);
 
   useEffect(() => {
-    updateQueryString(view, topic);
-  }, [view, topic]);
+    updateQueryString(view, group);
+  }, [view, group]);
 
   const filteredPosts = useMemo(() => {
-    let result = posts;
-    if (topic) {
-      result = result.filter((post) => post.topics.some((t) => t.slug === topic));
-    }
-    result = [...result].sort((a, b) => b.votesCount - a.votesCount);
-    return result;
-  }, [posts, topic]);
+    return filterPostsByGroup(posts, group, topicToGroup).sort(
+      (a, b) => b.votesCount - a.votesCount,
+    );
+  }, [posts, group, topicToGroup]);
 
   if (loading) {
     return <p className="loading-message">読み込み中...</p>;
@@ -83,7 +85,7 @@ export default function PostBrowser({ initialView, initialTopic }: PostBrowserPr
     <div className="post-browser">
       <div className="controls">
         <ViewToggle view={view} onViewChange={setView} />
-        <TopicTabs topics={topics} activeTopic={topic} onTopicChange={setTopic} />
+        <TopicTabs groups={groups} activeGroup={group} onGroupChange={setGroup} />
       </div>
       {view === 'list' ? (
         <PostGrid posts={filteredPosts} />

@@ -1,4 +1,4 @@
-import type { PostRecord, PostsData, TopicSummary, ViewMode } from './types';
+import type { PostRecord, PostsData, TopicGroup, ViewMode } from './types';
 
 const modules = import.meta.glob('../generated/posts.json', { eager: true });
 const postsData = (modules['../generated/posts.json'] as { default?: PostsData } | undefined)?.default ?? {
@@ -8,7 +8,8 @@ const postsData = (modules['../generated/posts.json'] as { default?: PostsData }
     totalCount: 0,
     source: 'producthunt-api-v2',
   },
-  topics: [],
+  groups: [],
+  topicToGroup: {},
   posts: [],
 };
 
@@ -16,17 +17,27 @@ export function loadPosts(): PostRecord[] {
   return postsData.posts ?? [];
 }
 
-export function loadTopics(): TopicSummary[] {
-  return postsData.topics ?? [];
+export function loadGroups(): TopicGroup[] {
+  return postsData.groups ?? [];
+}
+
+export function loadTopicToGroup(): PostsData['topicToGroup'] {
+  return postsData.topicToGroup ?? {};
 }
 
 export function loadMeta(): PostsData['meta'] {
   return postsData.meta;
 }
 
-export function filterPostsByTopic(posts: PostRecord[], topicSlug: string | null): PostRecord[] {
-  if (!topicSlug) return posts;
-  return posts.filter((post) => post.topics.some((topic) => topic.slug === topicSlug));
+export function filterPostsByGroup(
+  posts: PostRecord[],
+  groupSlug: string | null,
+  topicToGroup: Record<string, string>,
+): PostRecord[] {
+  if (!groupSlug) return posts;
+  return posts.filter((post) =>
+    post.topics.some((topic) => (topicToGroup[topic.slug] ?? 'other') === groupSlug),
+  );
 }
 
 export function sortPostsByVotes(posts: PostRecord[]): PostRecord[] {

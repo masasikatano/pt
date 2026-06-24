@@ -20,6 +20,8 @@ const {
   sleep,
 } = require('./shared');
 
+const topicGroups = require('../src/config/topic-groups.json');
+
 const FETCH_QUERY = `
   query FetchFeaturedPosts($postedAfter: DateTime!, $first: Int!, $after: String) {
     posts(
@@ -178,19 +180,59 @@ async function fetchPage(token, after = null, postedAfter = PH_POSTED_AFTER, att
   return json.data.posts;
 }
 
-function buildTopicSummary(posts) {
-  const counts = new Map();
+function buildTopicToGroupMap() {
+  const map = new Map();
+  for (const group of topicGroups) {
+    if (group.slug === 'other') continue;
+    for (const topicSlug of group.topicSlugs) {
+      map.set(topicSlug, group.slug);
+    }
+  }
+  return map;
+}
+
+const topicToGroupMap = buildTopicToGroupMap();
+const groupNameBySlug = new Map(topicGroups.map((g) => [g.slug, g.name]));
+
+function buildTopicToGroup(posts) {
+  const topicToGroup = {};
+  // Pre-populate known mappings so even topics with zero posts are recorded.
+  for (const [topicSlug, groupSlug] of topicToGroupMap) {
+    topicToGroup[topicSlug] = groupSlug;
+  }
   for (const post of posts) {
     for (const topic of post.topics) {
-      const existing = counts.get(topic.slug);
-      if (existing) {
-        existing.postCount += 1;
-      } else {
-        counts.set(topic.slug, { ...topic, postCount: 1 });
+      if (!topicToGroup[topic.slug]) {
+        topicToGroup[topic.slug] = 'other';
       }
     }
   }
-  return Array.from(counts.values()).sort((a, b) => b.postCount - a.postCount || a.name.localeCompare(b.name));
+  return topicToGroup;
+}
+
+function buildGroupSummary(posts, topicToGroup) {
+  const counts = new Map();
+  for (const post of posts) {
+    const groupsForPost = new Set();
+    for (const topic of post.topics) {
+      const groupSlug = topicToGroup[topic.slug] ?? 'other';
+      groupsForPost.add(groupSlug);
+    }
+    if (groupsForPost.size === 0) {
+      groupsForPost.add('other');
+    }
+    for (const groupSlug of groupsForPost) {
+      counts.set(groupSlug, (counts.get(groupSlug) || 0) + 1);
+    }
+  }
+
+  return Array.from(counts.entries())
+    .map(([slug, postCount]) => ({
+      slug,
+      name: groupNameBySlug.get(slug) ?? slug,
+      postCount,
+    }))
+    .sort((a, b) => b.postCount - a.postCount || a.name.localeCompare(b.name));
 }
 
 async function loadExistingPosts() {
@@ -214,7 +256,8 @@ function mergePosts(existing, fetched) {
 
 async function savePosts(posts, isPartial = false) {
   posts.sort((a, b) => b.votesCount - a.votesCount || (a.featuredAt ?? '').localeCompare(b.featuredAt ?? ''));
-  const topics = buildTopicSummary(posts);
+  const topicToGroup = buildTopicToGroup(posts);
+  const groups = buildGroupSummary(posts, topicToGroup);
 
   const output = {
     meta: {
@@ -223,7 +266,8 @@ async function savePosts(posts, isPartial = false) {
       totalCount: posts.length,
       source: 'producthunt-api-v2',
     },
-    topics,
+    groups,
+    topicToGroup,
     posts,
   };
 
@@ -233,9 +277,9 @@ async function savePosts(posts, isPartial = false) {
   await copyFile('src/generated/posts.json', 'public/posts.json');
 
   if (isPartial) {
-    console.warn(`[fetch-posts] Saved PARTIAL data: ${posts.length} posts and ${topics.length} topics (fetch was interrupted)`);
+    console.warn(`[fetch-posts] Saved PARTIAL data: ${posts.length} posts and ${groups.length} groups (fetch was interrupted)`);
   } else {
-    console.log(`[fetch-posts] Saved ${posts.length} posts and ${topics.length} topics to src/generated/posts.json`);
+    console.log(`[fetch-posts] Saved ${posts.length} posts and ${groups.length} groups to src/generated/posts.json`);
   }
 }
 

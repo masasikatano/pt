@@ -140,14 +140,15 @@ Product Hunt に登録された featured プロダクト（Post）を、2026 年
 | ランキング | 投票数降順（固定） | 順位番号付きリスト |
 
 - 表示切替は React Island でクライアントサイド実装
-- URL 状態保持（任意）: `?view=ranking&topic={slug}`
+- URL 状態保持（任意）: `?view=ranking&group={slug}`
 
-### 3.4 トピックタブ
+### 3.4 トピックグループタブ
 
 - 先頭タブ: **すべて**（フィルターなし）
-- 以降: 取得 Post に含まれる全トピックを **投稿数の多い順** でタブ表示
-- タブ選択時: 該当トピックを持つ Post のみ表示（一覧・ランキング両モードに適用）
-- トピック数が多い場合: 横スクロール可能なタブバー（mtg の `TabBar` パターン）
+- 以降: 個別トピックを `src/config/topic-groups.json` で定義したグループにまとめ、**投稿数の多い順** でタブ表示
+- タブ選択時: 該当グループに属するトピックを持つ Post のみ表示（一覧・ランキング両モードに適用）
+- グループ数が多い場合: 横スクロール可能なタブバー（mtg の `TabBar` パターン）
+- グループに含まれないトピックは **その他** グループにまとめる
 
 ### 3.5 日本語 UI ラベル（例）
 
@@ -170,14 +171,15 @@ Product Hunt に登録された featured プロダクト（Post）を、2026 年
 
 | パス | 説明 |
 |------|------|
-| `/` | 唯一のページ。一覧 / ランキング / トピックフィルター |
+| `/` | 唯一のページ。一覧 / ランキング / トピックグループフィルター |
 
 クエリパラメータ（任意、ブックマーク・共有用）:
 
 | パラメータ | 値 | 説明 |
 |-----------|-----|------|
 | `view` | `list` / `ranking` | 表示モード（デフォルト: `list`） |
-| `topic` | トピック slug | トピックフィルター（デフォルト: なし = すべて） |
+| `group` | グループ slug | トピックグループフィルター（デフォルト: なし = すべて） |
+| `topic` | グループ slug | 旧パラメータ。group と同じ slug の場合はフォールバックして有効 |
 
 ---
 
@@ -276,8 +278,15 @@ interface PostsData {
     totalCount: number;
     source: "producthunt-api-v2";
   };
-  topics: TopicSummary[];    // タブ生成用（投稿数降順）
+  groups: TopicGroup[];      // グループタブ生成用（投稿数降順）
+  topicToGroup: Record<string, string>; // 個別トピック slug → グループ slug
   posts: PostRecord[];
+}
+
+interface TopicGroup {
+  slug: string;
+  name: string;
+  postCount: number;
 }
 
 interface TopicSummary {

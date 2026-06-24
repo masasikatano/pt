@@ -1,37 +1,37 @@
 'use client';
 
 import { t } from '@/lib/i18n';
-import type { TopicSummary } from '@/lib/types';
+import type { TopicGroup } from '@/lib/types';
 
 interface TopicTabsProps {
-  topics: TopicSummary[];
-  activeTopic: string | null;
-  onTopicChange: (topicSlug: string | null) => void;
+  groups: TopicGroup[];
+  activeGroup: string | null;
+  onGroupChange: (groupSlug: string | null) => void;
 }
 
-export default function TopicTabs({ topics, activeTopic, onTopicChange }: TopicTabsProps) {
+export default function TopicTabs({ groups, activeGroup, onGroupChange }: TopicTabsProps) {
   return (
-    <nav className="topic-tabs" role="tablist" aria-label="トピックフィルター">
+    <nav className="topic-tabs" role="tablist" aria-label="トピックグループフィルター">
       <button
         type="button"
         role="tab"
-        className={`topic-tab${activeTopic === null ? ' active' : ''}`}
-        onClick={() => onTopicChange(null)}
-        aria-selected={activeTopic === null}
+        className={`topic-tab${activeGroup === null ? ' active' : ''}`}
+        onClick={() => onGroupChange(null)}
+        aria-selected={activeGroup === null}
       >
         {t('topic.all')}
       </button>
-      {topics.map((topic) => (
+      {groups.map((group) => (
         <button
-          key={topic.slug}
+          key={group.slug}
           type="button"
           role="tab"
-          className={`topic-tab${activeTopic === topic.slug ? ' active' : ''}`}
-          onClick={() => onTopicChange(topic.slug)}
-          aria-selected={activeTopic === topic.slug}
+          className={`topic-tab${activeGroup === group.slug ? ' active' : ''}`}
+          onClick={() => onGroupChange(group.slug)}
+          aria-selected={activeGroup === group.slug}
         >
-          {topic.name}
-          <span className="topic-count">{topic.postCount}</span>
+          {group.name}
+          <span className="topic-count">{group.postCount}</span>
         </button>
       ))}
     </nav>

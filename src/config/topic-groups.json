@@ -1,0 +1,283 @@
+[
+  {
+    "slug": "ai",
+    "name": "AI",
+    "topicSlugs": [
+      "artificial-intelligence",
+      "bots",
+      "virtual-assistants",
+      "vibe-coding"
+    ]
+  },
+  {
+    "slug": "development",
+    "name": "開発",
+    "topicSlugs": [
+      "developer-tools",
+      "software-engineering",
+      "development",
+      "open-source",
+      "github",
+      "api-1",
+      "chrome-extensions",
+      "browser-extensions",
+      "edge-extensions",
+      "sdk",
+      "text-editors",
+      "database",
+      "no-code",
+      "maker-tools",
+      "web-app"
+    ]
+  },
+  {
+    "slug": "design",
+    "name": "デザイン",
+    "topicSlugs": [
+      "design-tools",
+      "design",
+      "ux-design",
+      "user-experience",
+      "graphic-design",
+      "graphics-design",
+      "web-design",
+      "prototyping",
+      "typography",
+      "photo-editing",
+      "photography",
+      "video-art",
+      "animation",
+      "3d-modeling"
+    ]
+  },
+  {
+    "slug": "productivity",
+    "name": "生産性",
+    "topicSlugs": [
+      "productivity",
+      "task-management",
+      "time-tracking",
+      "notes",
+      "calendar",
+      "notion",
+      "email",
+      "meetings",
+      "remote-work",
+      "menu-bar-apps"
+    ]
+  },
+  {
+    "slug": "marketing",
+    "name": "マーケティング",
+    "topicSlugs": [
+      "marketing",
+      "marketing-automation",
+      "social-media-marketing",
+      "email-marketing",
+      "seo",
+      "advertising",
+      "affiliate-marketing",
+      "growth-hacking",
+      "branding"
+    ]
+  },
+  {
+    "slug": "business",
+    "name": "ビジネス",
+    "topicSlugs": [
+      "business",
+      "business-books",
+      "business-intelligence",
+      "startup-books",
+      "startup-lessons",
+      "venture-capital",
+      "fundraising",
+      "finance",
+      "fintech",
+      "investing",
+      "money",
+      "payments",
+      "credit-card",
+      "banking",
+      "saas",
+      "sales",
+      "crm",
+      "e-commerce",
+      "website-builder",
+      "wordpress",
+      "hiring",
+      "legal",
+      "career",
+      "human-resources",
+      "operations"
+    ]
+  },
+  {
+    "slug": "hardware-os",
+    "name": "ハード/OS",
+    "topicSlugs": [
+      "mac",
+      "ios",
+      "android",
+      "windows",
+      "pc",
+      "computers",
+      "hardware",
+      "wearables",
+      "apple-watch",
+      "webcam",
+      "apple",
+      "linux",
+      "custom-keyboards",
+      "3d-printer",
+      "robots",
+      "internet-of-things",
+      "tv",
+      "augmented-reality",
+      "virtual-reality"
+    ]
+  },
+  {
+    "slug": "creative",
+    "name": "クリエイティブ",
+    "topicSlugs": [
+      "art",
+      "audio",
+      "electronic-music",
+      "entertainment",
+      "funny",
+      "gifs",
+      "music",
+      "photo-video",
+      "radio",
+      "spotify",
+      "streaming-services",
+      "video",
+      "video-cameras",
+      "video-streaming",
+      "wallpaper",
+      "writing",
+      "youtube",
+      "books",
+      "ebook-reader"
+    ]
+  },
+  {
+    "slug": "games",
+    "name": "ゲーム",
+    "topicSlugs": [
+      "games",
+      "free-games",
+      "puzzle-games",
+      "retro-games",
+      "open-world-games",
+      "board-games",
+      "nintendo"
+    ]
+  },
+  {
+    "slug": "lifestyle",
+    "name": "ライフスタイル",
+    "topicSlugs": [
+      "health",
+      "health-fitness",
+      "fitness",
+      "meditation",
+      "nutrition",
+      "travel",
+      "food-drink",
+      "outdoors",
+      "nature",
+      "nature-outdoors",
+      "cooking",
+      "beauty-fashion",
+      "pets",
+      "cats",
+      "plants",
+      "home",
+      "lifestyle",
+      "education",
+      "online-learning",
+      "languages",
+      "kids",
+      "parenting",
+      "sports",
+      "soccer",
+      "football",
+      "dating",
+      "weather",
+      "maps",
+      "medical",
+      "quantified-self",
+      "biohacking",
+      "climate-tech",
+      "inclusivity",
+      "cars",
+      "electric-cars",
+      "transportation",
+      "tuning",
+      "personal-finance",
+      "budgeting",
+      "alarms",
+      "emoji"
+    ]
+  },
+  {
+    "slug": "communication",
+    "name": "コミュニケーション",
+    "topicSlugs": [
+      "social-media",
+      "social-network",
+      "social-networking",
+      "messaging",
+      "customer-communication",
+      "community",
+      "slack",
+      "linkedin",
+      "reddit",
+      "imessage-apps",
+      "news",
+      "newsletters"
+    ]
+  },
+  {
+    "slug": "security-privacy",
+    "name": "セキュリティ",
+    "topicSlugs": [
+      "security",
+      "privacy",
+      "encryption"
+    ]
+  },
+  {
+    "slug": "events",
+    "name": "イベント・ローンチ",
+    "topicSlugs": [
+      "vercel-day",
+      "yc-application",
+      "pitch-singapore",
+      "pitch-tel-aviv",
+      "pitch-dubai",
+      "pitch-paris",
+      "alpha",
+      "events",
+      "live-events"
+    ]
+  },
+  {
+    "slug": "data-analytics",
+    "name": "データ",
+    "topicSlugs": [
+      "analytics",
+      "data",
+      "data-analytics",
+      "data-science",
+      "data-visualization"
+    ]
+  },
+  {
+    "slug": "other",
+    "name": "その他",
+    "topicSlugs": []
+  }
+]
